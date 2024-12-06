@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Blood Count</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        /* Header styling */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #007bff;
+            padding: 20px;
+            color: white;
+        }
+
+        .img img {
+            height: 80px;
+            width: 150px;
+        }
+
+        .nav {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Main container styling */
+        #one {
+            background-image: url('test.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 60px 0;
+            text-align: center;
+            color: white;
+        }
+
+        /* Form styling */
+        .parameters {
+            margin: 0 auto;
+            padding: 30px;
+            background-color: white;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Result styling */
+        .result {
+            margin-top: 30px;
+            display: none; /* Hidden by default */
+        }
+
+        .result h4 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .result p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        #sugg {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #sugg:hover {
+            text-decoration: underline;
+        }
+
+        /* Breadcrumb styling */
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .parameters {
+                padding: 20px;
+                margin: 20px;
+            }
+
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="img">
+            <img src="medlogo.png" alt="Logo">
+        </div>
+        <div class="nav">COMPLETE BLOOD COUNT</div>
+    </header>
+
+    <!-- Main Content -->
+    <div id="one">
+        <a href="tests.html" id="one">Tests</a> > <a href="sugar.html" id="two">Blood Sugar</a>
+        <br><br>
+        <div class="parameters">
+            <form id="cbc-form">
+                <label for="wbc">White blood cells (cells/mcL)</label>
+                <input type="number" id="wbc" placeholder="Enter value in cells/mcL" required>
+
+                <label for="hmg">Haemoglobin (gm/dL)</label>
+                <input type="number" id="hmg" placeholder="Enter value in gm/dL" required>
+
+                <label for="hmt">Hematocrit (%)</label>
+                <input type="number" id="hmt" placeholder="Enter value in %" required>
+
+                <label for="mcv">Mean corpuscular volume (fL)</label>
+                <input type="number" id="mcv" placeholder="Enter value in fL" required>
+
+                <label for="plate">Platelets (platelets/mcL)</label>
+                <input type="number" id="plate" placeholder="Enter value in platelets/mcL" required>
+
+                <button type="button" onclick="result()">Submit</button>
+            </form>
+        </div>
+
+        <div class="result" id="calc">
+            <h4>Report</h4>
+            <p id="report"></p>
+            <a href="cbcdiet.html" id="sugg">See Diet Suggestions</a>
+        </div>
+    </div>
+
+    <script>
+        function result() {
+            // Get form values
+            const wbc = parseFloat(document.getElementById('wbc').value);
+            const hmg = parseFloat(document.getElementById('hmg').value);
+            const hmt = parseFloat(document.getElementById('hmt').value);
+            const mcv = parseFloat(document.getElementById('mcv').value);
+            const plate = parseFloat(document.getElementById('plate').value);
+
+            // Basic validation
+            if (isNaN(wbc) || isNaN(hmg) || isNaN(hmt) || isNaN(mcv) || isNaN(plate)) {
+                alert('Please enter all required values.');
+                return;
+            }
+
+            // Example logic for CBC evaluation (customize as needed)
+            const report = `
+                <strong>White Blood Cells:</strong> ${wbc} cells/mcL<br>
+                <strong>Haemoglobin:</strong> ${hmg} gm/dL<br>
+                <strong>Hematocrit:</strong> ${hmt}%<br>
+                <strong>Mean Corpuscular Volume:</strong> ${mcv} fL<br>
+                <strong>Platelets:</strong> ${plate} platelets/mcL<br>
+                <strong>Status:</strong> Data analyzed successfully.
+            `;
+
+            document.getElementById('report').innerHTML = report;
+            document.getElementById('calc').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

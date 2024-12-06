@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Sugar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        header .img img {
+            height: 80px;
+            width: 150px;
+        }
+
+        header .nav {
+            margin-left: auto;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .main {
+            padding: 20px;
+        }
+
+        .parameters {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .parameters label {
+            font-weight: bold;
+        }
+
+        .parameters select,
+        .parameters input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+
+        .parameters button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .parameters button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .result h4 {
+            margin-bottom: 15px;
+        }
+
+        .result a {
+            display: inline-block;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .result a:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<header>
+    <div class="img"><img src="medlogo.png" alt="MedLogo"></div>
+    <div class="nav">Blood Sugar Test</div>
+</header>
+<body>
+    <div class="main">
+        <a href="tests.html" id="one">Tests</a> > <a href="sugar.html" id="two">Blood Sugar</a>
+        <br><br>
+        <div class="parameters">
+            <label for="test">Test Type</label>
+            <select name="Test Type" id="test">
+                <option value="Fasting Blood Sugar">Fasting Blood Sugar (FBS)</option>
+                <option value="Postprandial Blood Sugar">Postprandial Blood Sugar (PPBS)</option>
+                <option value="Random Blood Sugar">Random Blood Sugar (RBS)</option>
+                <option value="Hemoglobin A1c">Hemoglobin A1c (HbA1c)</option>
+                <option value="Oral Glucose Tolerance Test">Oral Glucose Tolerance Test (OGTT)</option>
+            </select>
+
+            <label for="val">Enter the measured value</label>
+            <input type="text" placeholder="Enter in mg/dL" id="val">
+
+            <button id="save" onclick="result()">Submit</button>
+        </div>
+
+        <div class="result" id="calc">
+            <h4>Report</h4>
+            <p id="report"></p>
+            <div id="myDIV">
+                <a href="sugardiet.html" id="sugg">See Diet Suggestions</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Medcheck. All rights reserved.</p>
+    </footer>
+
+    <script src="sugar.js"></script>
+</body>
+</html>

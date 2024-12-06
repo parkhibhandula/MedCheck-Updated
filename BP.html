@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Pressure</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #007bff;
+            color: white;
+        }
+
+        .img img {
+            height: 80px;
+            width: 150px;
+        }
+
+        .nav {
+            margin-left: 25%;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .main {
+            padding: 20px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: none; /* Initially hidden */
+        }
+
+        .result h4 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .result p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="img">
+            <img src="medlogo.png" alt="Medical Logo">
+        </div>
+        <div class="nav">BLOOD PRESSURE</div>
+    </header>
+
+    <!-- Main Content Section -->
+    <div class="main">
+        <div>
+            <a href="tests.html">Tests</a> > <a href="bp.html">Blood Pressure</a>
+        </div>
+        <p class="parameters">
+            <!-- Blood Pressure Form -->
+            <form id="bp-form" method="post">
+                <label for="systolic">Systolic Pressure</label>
+                <input type="text" id="systolic" placeholder="Enter value in mmHg">
+
+                <label for="diastolic">Diastolic Pressure</label>
+                <input type="text" id="diastolic" placeholder="Enter value in mmHg">
+
+                <label for="age">Age</label>
+                <input type="text" id="age" placeholder="Enter your age">
+
+                <label for="gender">Gender</label>
+                <select id="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+
+                <label for="pregnancy">Are you pregnant?</label>
+                <select id="pregnancy">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                </select>
+
+                <button type="button" id="btn" onclick="result()">Submit</button>
+            </form>
+
+            <!-- Result Section -->
+            <div class="result" id="calc">
+                <h4>Report</h4>
+                <p id="report"></p>
+                <p id="suggestion"></p>
+            </div>
+        </p>
+    </div>
+
+    <script>
+        function result() {
+            // Get input values
+            const systolic = document.getElementById("systolic").value;
+            const diastolic = document.getElementById("diastolic").value;
+            const age = document.getElementById("age").value;
+            const gender = document.getElementById("gender").value;
+            const pregnancy = document.getElementById("pregnancy").value;
+
+            // Simple validation
+            if (!systolic || !diastolic || !age) {
+                alert("Please enter systolic, diastolic pressures and age.");
+                return;
+            }
+
+            // Convert input to numbers
+            const systolicValue = parseFloat(systolic);
+            const diastolicValue = parseFloat(diastolic);
+            const ageValue = parseInt(age);
+
+            if (isNaN(systolicValue) || isNaN(diastolicValue) || isNaN(ageValue)) {
+                alert("Please enter valid numeric values.");
+                return;
+            }
+
+            // Check for realistic human limits
+            if (systolicValue < 50 || systolicValue > 250 || diastolicValue < 30 || diastolicValue > 150) {
+                alert("Please enter realistic blood pressure values.");
+                return;
+            }
+
+            // Determine Blood Pressure Status
+            let status = "";
+            let suggestion = "";
+
+            // Slight Elevation/Drop Handling for Children
+            if (ageValue < 18) {
+                if (systolicValue < 90 && diastolicValue < 60) {
+                    status = "Normal Blood Pressure";
+                    suggestion = "Maintain a healthy diet and regular exercise.";
+                } else if ((systolicValue >= 90 && systolicValue < 95) || (diastolicValue >= 60 && diastolicValue < 80)) {
+                    status = "Elevated Blood Pressure";
+                    suggestion = "Monitor BP regularly and reduce salt intake.";
+                } else if ((systolicValue >= 95 && systolicValue < 99) || (diastolicValue >= 80 && diastolicValue < 90)) {
+                    status = "Hypertension Stage 1";
+                    suggestion = "Consult a pediatrician for further evaluation.";
+                } else if (systolicValue >= 99 || diastolicValue >= 90) {
+                    status = "Hypertension Stage 2";
+                    suggestion = "Consult a pediatrician immediately.";
+                }
+            } else {
+                // Adult BP Analysis (similar to existing logic)
+                if (systolicValue < 120 && diastolicValue < 80) {
+                    status = "Normal Blood Pressure";
+                    suggestion = "Maintain a healthy diet and regular exercise.";
+                } else if ((systolicValue >= 120 && systolicValue < 130) && diastolicValue < 80) {
+                    status = "Elevated Blood Pressure";
+                    suggestion = "Monitor your blood pressure and reduce salt intake.";
+                } else if ((systolicValue >= 130 && systolicValue <= 139) || (diastolicValue >= 80 && diastolicValue <= 89)) {
+                    status = "Hypertension Stage 1";
+                    suggestion = "Adopt a low-sodium diet, exercise regularly, and consult a doctor.";
+                } else if (systolicValue >= 140 || diastolicValue >= 90) {
+                    status = "Hypertension Stage 2";
+                    suggestion = "Consult a doctor immediately and follow prescribed treatments.";
+                } else if (systolicValue >= 180 || diastolicValue >= 120) {
+                    status = "Hypertensive Crisis (Consult your doctor immediately)";
+                    suggestion = "Seek emergency medical attention.";
+                }
+            }
+
+            // Additional adjustments based on age, gender, and pregnancy status
+            if (pregnancy === "yes") {
+                suggestion += "<br>If you are pregnant, monitor your blood pressure regularly to avoid preeclampsia.";
+            }
+
+            // Display the result
+            document.getElementById("report").innerHTML = `
+                <strong>Systolic:</strong> ${systolicValue} mmHg<br>
+                <strong>Diastolic:</strong> ${diastolicValue} mmHg<br>
+                <strong>Status:</strong> ${status}
+            `;
+            document.getElementById("suggestion").innerHTML = `
+                <strong>Suggestions:</strong> ${suggestion}
+            `;
+            document.getElementById("calc").style.display = "block";
+        }
+    </script>
+</body>
+</html>

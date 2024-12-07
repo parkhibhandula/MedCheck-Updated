@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Badges - MedCheck</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+    .badges-header {
+      background-color: #007bff;
+      color: white;
+      text-align: center;
+      padding: 50px 20px;
+    }
+    .badges-header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+    .badges-header p {
+      font-size: 1.2rem;
+    }
+    .badges-section {
+      padding: 60px 20px;
+    }
+    .badge-card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+      padding: 30px;
+    }
+    .badge-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+    .badge-card img {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 15px;
+      border-radius: 50%;
+    }
+    .badge-card h3 {
+      color: #007bff;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .badge-card p {
+      color: #555;
+      font-size: 1rem;
+    }
+    footer {
+      background-color: #007bff;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header class="badges-header">
+    <h1>Your Badges</h1>
+    <p>Earn badges for your achievements in Step Count, Diet, and Exercise.</p>
+  </header>
+
+  <!-- Badges Section -->
+  <section class="badges-section">
+    <div class="container">
+      <a href="/stepcount.html"><h2 class="text-center mb-5">Step Count Badges</h2></a>
+      <div class="row g-4">
+        <!-- Step Count Badge 1 -->
+        <div class="col-md-4">
+          <div class="badge-card">
+            <img src="https://via.placeholder.com/100x100?text=10k+Steps" alt="10k Steps Badge">
+            <h3>1000 Steps</h3>
+            <p>Earned by walking 1000 steps in a day.</p>
+          </div>
+        </div>
+        <!-- Step Count Badge 2 -->
+        <div class="col-md-4">
+          <div class="badge-card">
+            <img src="https://via.placeholder.com/100x100?text=50k+Steps" alt="50k Steps Badge">
+            <h3>5K Steps</h3>
+            <p>Earned by walking 5000 steps in a week.</p>
+          </div>
+        </div>
+        <!-- Step Count Badge 3 -->
+        <div class="col-md-4">
+          <div class="badge-card">
+            <img src="https://via.placeholder.com/100x100?text=100k+Steps" alt="100k Steps Badge">
+            <h3>10K Steps</h3>
+            <p>Earned by walking 10,000 steps in a month.</p>
+          </div>
+        </div>
+      </div>
+
+     <a href=""> <h2 class="text-center my-5">Diet Badges</h2></a>
+      <div class="row g-4">
+        <!-- Diet Badge 1 -->
+        <div class="col-md-4">
+          <div class="badge-card">
+            <img src="https://via.placeholder.com/100x100?text=Healthy+Diet" alt="Healthy Diet Badge">
+            <h3>Healthy Diet</h3>
+            <p>Earned by following a balanced diet for a week.</p>
+          </div>
+        </div>
+        <!-- Diet Badge 2 -->
+        <div class="col-md-4">
+          <div class="badge-card">
+            <img src="https://via.placeholder.com/100x100?text=Vegan+Diet" alt="Vegan Diet Badge">
+            <h3>Vegan Diet</h3>
+            <p>Earned by following a vegan diet for a month.</p>
+          </div>
+        </div>
+        <!-- Diet Badge 3 -->
+        <div class="col-md-4">
+          <div class="badge-card">
+            <img src="https://via.placeholder.com/100x100?text=Calorie+Control" alt="Calorie Control Badge">
+            <h3>Calorie Control</h3>
+            <p>Earned by maintaining calorie intake for a month.</p>
+          </div>
+        </div>
+      </div>
+
+     <a href=""> <h2 class="text-center my-5">Exercise Badges</h2></a>
+      <div class="row g-4">
+        <!-- Exercise Badge 1 -->
+        <div class="col-md-4">
+          <div class="badge-card">
+            <img src="https://via.placeholder.com/100x100?text=Daily+Exercise" alt="Daily Exercise Badge">
+            <h3>Daily Exercise</h3>
+            <p>Earned by exercising daily for 7 days.</p>
+          </div>
+        </div>
+        <!-- Exercise Badge 2 -->
+        <div class="col-md-4">
+          <div class="badge-card">
+            <img src="https://via.placeholder.com/100x100?text=30+Days+Fit" alt="30 Days Fit Badge">
+            <h3>30 Days Fit</h3>
+            <p>Earned by exercising daily for 30 days.</p>
+          </div>
+        </div>
+        <!-- Exercise Badge 3 -->
+        <div class="col-md-4">
+          <div class="badge-card">
+            <img src="https://via.placeholder.com/100x100?text=Fitness+Pro" alt="Fitness Pro Badge">
+            <h3>Fitness Pro</h3>
+            <p>Earned by completing advanced fitness challenges.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 MedCheck. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFmpleRz+Cb4QnUCIp2UQctH1Kz1Z7NQFjQIAqVGGw5ywllLvoFxjgOhZX" crossorigin="anonymous"></script>
+</body>
+</html>

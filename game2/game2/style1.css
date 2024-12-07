@@ -1,0 +1,93 @@
+/* Body styling */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #72c2b9, #b8e1e0); /* Medical-themed gradient */
+    color: #333;
+    overflow: hidden;
+  }
+  
+  /* Game container */
+  #game-container {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    padding: 20px;
+  }
+  
+  /* Player */
+  #player {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+  }
+  
+  /* Scoreboard */
+  #scoreboard {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  #score {
+    color: #28a745; /* Green for score */
+  }
+  
+  #health {
+    color: #dc3545; /* Red for health */
+  }
+  
+  /* Game title */
+  #game-title {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #0d6efd; /* Blue color for the title */
+    font-family: 'Arial', sans-serif;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Food items */
+  .item {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .healthy {
+    background: url('images/healthy_food.png') no-repeat center center;
+    background-size: cover;
+    border: 3px solid #28a745; /* Green border for healthy items */
+  }
+  
+  .unhealthy {
+    background: url('images/unhealthy_food.png') no-repeat center center;
+    background-size: cover;
+    border: 3px solid #dc3545; /* Red border for unhealthy items */
+  }
+  
+  /* Hover effect for items */
+  .item:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s;
+  }
+  

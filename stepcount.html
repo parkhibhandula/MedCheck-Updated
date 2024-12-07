@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step Counter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f9fc;
+      text-align: center;
+      color: #333;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #0078D7;
+    }
+
+    .info {
+      margin: 20px 0;
+      font-size: 1.2rem;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      color: white;
+      background: #0078D7;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #005bb5;
+    }
+
+    .badge {
+      margin: 30px 0;
+    }
+
+    .badge img {
+      width: 150px;
+      height: 150px;
+      opacity: 0.3; /* Badge initially dimmed */
+    }
+
+    .badge img.unlocked {
+      opacity: 1; /* Badge lights up when unlocked */
+    }
+
+    .progress {
+      margin: 20px 0;
+    }
+
+    .progress span {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Step Counter</h1>
+    <p class="info">Press "Start Counting" and walk to track your steps.</p>
+    <button id="start-btn" onclick="startCounting()">Start Counting</button>
+    <button id="reset-btn" onclick="resetSteps()" style="display:none;">Reset</button>
+
+    <div class="progress">
+      <p>Steps Today: <span id="step-count">0</span></p>
+      <p>Daily Goal: 1000 steps</p>
+      <p>Current Streak: <span id="streak-count">0</span> days</p>
+    </div>
+
+    <div class="badge">
+      <h2>Your Badge</h2>
+      <img id="badge-image" src="/run-streak.png" alt="Locked Badge" />
+      <p id="badge-status">Earn a badge after 5 consecutive days of meeting your goal!</p>
+    </div>
+  </div>
+
+  <script>
+    let stepCount = 0;
+    let streak = 0;
+    let goal = 1000;
+    let isCounting = false;
+
+    // Check if the browser supports motion sensors
+    if (!('Accelerometer' in window)) {
+      alert("Your device does not support motion sensors for step tracking.");
+    }
+
+    let lastAcceleration = { x: 0, y: 0, z: 0 };
+
+    // Function to start counting steps
+    function startCounting() {
+      const startBtn = document.getElementById("start-btn");
+      const resetBtn = document.getElementById("reset-btn");
+
+      // Enable step counting
+      isCounting = true;
+      startBtn.style.display = "none";
+      resetBtn.style.display = "inline-block";
+
+      // Listen to motion events
+      if ('DeviceMotionEvent' in window) {
+        window.addEventListener("devicemotion", handleMotion);
+      } else {
+        alert("Device motion not supported on this device.");
+      }
+    }
+
+    // Handle motion events and count steps
+    function handleMotion(event) {
+      if (!isCounting) return;
+
+      const acceleration = event.accelerationIncludingGravity;
+      const deltaX = Math.abs(lastAcceleration.x - acceleration.x);
+      const deltaY = Math.abs(lastAcceleration.y - acceleration.y);
+      const deltaZ = Math.abs(lastAcceleration.z - acceleration.z);
+
+      if (deltaX + deltaY + deltaZ > 2) {
+        stepCount++;
+        updateStepCount();
+      }
+
+      lastAcceleration = { ...acceleration };
+    }
+
+    // Update the step count display and check for goals
+    function updateStepCount() {
+      document.getElementById("step-count").innerText = stepCount;
+
+      if (stepCount >= goal) {
+        streak++;
+        document.getElementById("streak-count").innerText = streak;
+
+        if (streak >= 5) {
+          unlockBadge();
+        }
+
+        isCounting = false; // Stop counting for today
+        alert("Goal reached for today! Keep going to maintain your streak.");
+      }
+    }
+
+    // Function to unlock the badge
+    function unlockBadge() {
+      const badgeImage = document.getElementById("badge-image");
+      const badgeStatus = document.getElementById("badge-status");
+
+      badgeImage.src = "/run-streak.png"; // Unlocked badge image
+      badgeImage.classList.add("unlocked");
+      badgeStatus.innerText = "Congratulations! You've earned your badge!";
+    }
+
+    // Reset the step count
+    function resetSteps() {
+      stepCount = 0;
+      isCounting = false;
+      document.getElementById("step-count").innerText = stepCount;
+      document.getElementById("start-btn").style.display = "inline-block";
+      document.getElementById("reset-btn").style.display = "none";
+    }
+  </script>
+</body>
+</html>

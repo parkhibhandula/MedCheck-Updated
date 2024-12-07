@@ -12,6 +12,9 @@
     .section { margin-bottom: 20px; }
     .highlight { font-weight: bold; color: #007BFF; }
     ul { list-style-type: square; margin-left: 20px; }
+    .status-normal { color: green; }
+    .status-high { color: red; }
+    .status-low { color: orange; }
   </style>
 </head>
 <body>
@@ -78,16 +81,26 @@
       const namePattern = /Patient Name\s*:\s*(.+)/i;
       const agePattern = /Age\s*\/\s*Sex\s*:\s*(\d+\s*Years)/i;
       const mobilePattern = /Mobile No\s*:\s*(\d+)/i;
-
-      // Hemoglobin and other results (for demonstration)
       const hemoglobinPattern = /Hemoglobin \(Hb\)\s*(\d+\.\d+)\s*gms\/dl/i;
-      const diagnosis = text.includes("Malaria Parasite") ? "Malaria Test Found" : "General CBC and Tests";
+      const cholesterolPattern = /Cholesterol\s*:\s*(\d+)/i;
+      const bloodPressurePattern = /Blood Pressure\s*:\s*(\d+\/\d+)/i;
+      const malariaTestPattern = /Malaria Parasite \(ANTIGEN\)\s*(\w+)/i;
+      const widalTestPattern = /Widal Test \(tube Method\)\s*1\/\d+\s*\+.*Result\s*:\s*(\w+)/i;
 
       // Extracted Data
       const name = text.match(namePattern) ? text.match(namePattern)[1].trim() : "Not Found";
       const age = text.match(agePattern) ? text.match(agePattern)[1].trim() : "Not Found";
       const mobile = text.match(mobilePattern) ? text.match(mobilePattern)[1].trim() : "Not Found";
       const hemoglobin = text.match(hemoglobinPattern) ? text.match(hemoglobinPattern)[1] : "Not Found";
+      const cholesterol = text.match(cholesterolPattern) ? text.match(cholesterolPattern)[1] : "Not Found";
+      const bloodPressure = text.match(bloodPressurePattern) ? text.match(bloodPressurePattern)[1] : "Not Found";
+      const malariaTest = text.match(malariaTestPattern) ? text.match(malariaTestPattern)[1] : "Not Found";
+      const widalTest = text.match(widalTestPattern) ? text.match(widalTestPattern)[1] : "Not Found";
+
+      // Status Logic
+      const hemoglobinStatus = parseFloat(hemoglobin) < 12 ? "Low" : "Normal";
+      const cholesterolStatus = parseInt(cholesterol) > 200 ? "High" : "Normal";
+      const bloodPressureStatus = bloodPressure === "Not Found" ? "Not Found" : (parseInt(bloodPressure.split('/')[0]) > 140 ? "High" : "Normal");
 
       // Format Data
       extractedData.innerHTML = `
@@ -97,16 +110,10 @@
           <p><span class="highlight">Age:</span> ${age}</p>
           <p><span class="highlight">Mobile No:</span> ${mobile}</p>
         </div>
-        <div class="section">
-          <h2>Test Results</h2>
-          <ul>
-            <li><span class="highlight">Hemoglobin:</span> ${hemoglobin} gms/dl</li>
-            <li><span class="highlight">Diagnosis:</span> ${diagnosis}</li>
-          </ul>
-        </div>
+        
         <div class="section">
           <h2>Additional Notes</h2>
-          <p>The report contains detailed information about various blood tests and malaria detection. Please review the full report for more insights.</p>
+          <p>The report contains relevant test results. Please review the full report for further insights.</p>
         </div>
       `;
     }

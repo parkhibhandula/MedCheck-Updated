@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liver Function Test (LFT)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #007bff;
+            color: white;
+        }
+
+        .img img {
+            height: 80px;
+            width: 150px;
+        }
+
+        .nav {
+            margin-left: 25%;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .main {
+            padding: 20px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="text"]:invalid {
+            border: 2px solid red;
+            margin: 2px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .result h4 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .result p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="img">
+            <h2 style="color: white;">MedCheck</h2>
+        </div>
+        <div class="nav">LIVER FUNCTION TEST</div>
+    </header>
+
+    <!-- Main Content Section -->
+    <div class="main">
+        <div>
+            <a href="/tests.html">Tests</a> > <a href="/LFT.html">Liver Function Test</a>
+        </div>
+        <!-- LFT Form -->
+        <form id="lft-form" method="post">
+            <label for="bilirubin">Total Bilirubin (mg/dL)</label>
+            <input type="text" id="bilirubin" placeholder="Enter Total Bilirubin level" required>
+
+            <label for="direct-bilirubin">Direct Bilirubin (mg/dL)</label>
+            <input type="text" id="direct-bilirubin" placeholder="Enter Direct Bilirubin level" required>
+
+            <label for="sgot">SGOT (AST) (U/L)</label>
+            <input type="text" id="sgot" placeholder="Enter SGOT level" required>
+
+            <label for="sgpt">SGPT (ALT) (U/L)</label>
+            <input type="text" id="sgpt" placeholder="Enter SGPT level" required>
+
+            <label for="alkaline-phosphatase">Alkaline Phosphatase (U/L)</label>
+            <input type="text" id="alkaline-phosphatase" placeholder="Enter Alkaline Phosphatase level" required>
+
+            <label for="total-protein">Total Protein (g/dL)</label>
+            <input type="text" id="total-protein" placeholder="Enter Total Protein level" required>
+
+            <label for="albumin">Albumin (g/dL)</label>
+            <input type="text" id="albumin" placeholder="Enter Albumin level" required>
+
+            <label for="ag-ratio">A/G Ratio</label>
+            <input type="text" id="ag-ratio" placeholder="Enter A/G Ratio" required>
+
+            <button type="button" id="btn" onclick="calculateLFT()">Submit</button>
+        </form>
+
+        <!-- Result Section -->
+        <div class="result" id="lft-result" aria-live="polite">
+            <h4>Report</h4>
+            <p id="lft-report"></p>
+            <p id="lft-suggestion"></p>
+        </div>
+    </div>
+
+    <script>
+        function calculateLFT() {
+            const inputs = {
+                "Total Bilirubin": document.getElementById("bilirubin").value,
+                "Direct Bilirubin": document.getElementById("direct-bilirubin").value,
+                "SGOT (AST)": document.getElementById("sgot").value,
+                "SGPT (ALT)": document.getElementById("sgpt").value,
+                "Alkaline Phosphatase": document.getElementById("alkaline-phosphatase").value,
+                "Total Protein": document.getElementById("total-protein").value,
+                "Albumin": document.getElementById("albumin").value,
+                "A/G Ratio": document.getElementById("ag-ratio").value,
+            };
+
+            const normalRanges = {
+                "Total Bilirubin": { min: 0.1, max: 1.3 },
+                "Direct Bilirubin": { min: 0.0, max: 0.3 },
+                "SGOT (AST)": { min: 8, max: 40 },
+                "SGPT (ALT)": { min: 4, max: 56 },
+                "Alkaline Phosphatase": { min: 40, max: 130 },
+                "Total Protein": { min: 6.0, max: 8.3 },
+                "Albumin": { min: 3.5, max: 5.2 },
+                "A/G Ratio": { min: 1.1, max: 2.5 },
+            };
+
+            let report = "Normal";
+            let suggestion = "Maintain a healthy lifestyle.";
+            let abnormalTests = [];
+
+            for (const [test, value] of Object.entries(inputs)) {
+                const numericValue = parseFloat(value);
+                if (isNaN(numericValue)) {
+                    alert(`Please enter a valid value for ${test}.`);
+                    document.getElementById(test.toLowerCase().replace(/\s+/g, "-")).style.border = "2px solid red";
+                    return;
+                }
+
+                const { min, max } = normalRanges[test];
+                if (numericValue < min || numericValue > max) {
+                    abnormalTests.push(`${test}: ${numericValue} (Normal range: ${min}-${max})`);
+                    report = "Abnormal Liver Function";
+                    suggestion = "Consult a doctor for further evaluation and advice.";
+                }
+            }
+
+            const abnormalList = abnormalTests.length
+                ? `<strong>Abnormal Tests:</strong><ul>${abnormalTests.map(test => `<li>${test}</li>`).join("")}</ul>`
+                : "All tests are within the normal range.";
+
+            document.getElementById("lft-report").innerHTML = `
+                <strong>Status:</strong> ${report}<br>
+                ${abnormalList}
+            `;
+            document.getElementById("lft-suggestion").innerHTML = `<strong>Suggestion:</strong> ${suggestion}`;
+            document.getElementById("lft-result").style.display = "block";
+        }
+    </script>
+</body>
+</html>
